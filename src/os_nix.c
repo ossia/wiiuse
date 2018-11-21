@@ -32,7 +32,7 @@
  */
 
 #include "wiiuse_internal.h"           /* for WM_RPT_CTRL_STATUS */
-#include "io.h"
+#include "wii_io.h"
 #include "events.h"
 #include "os.h"
 
