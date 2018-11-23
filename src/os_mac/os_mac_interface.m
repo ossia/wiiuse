@@ -35,7 +35,7 @@
 
 #import "os_mac.h"
 
-#import "../io.h"
+#import "../wii_io.h"
 #import "../events.h"
 #import "../os.h"
 
