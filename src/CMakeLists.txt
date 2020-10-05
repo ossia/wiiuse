@@ -54,9 +54,18 @@ if(MSVC)
   list(APPEND API wiiuse_msvcstdint.h)
 endif()
 
-add_definitions(-DWIIUSE_COMPILE_LIB)
+if(BUILD_WIIUSE_SHARED_LIB)
+  set(WIIUSE_LIB_TYPE SHARED)
+else()
+  set(WIIUSE_LIB_TYPE STATIC)
+endif()
 
 add_library(wiiuse ${WIIUSE_LIB_TYPE} ${SOURCES} ${API})
+
+target_compile_definitions(wiiuse PRIVATE WIIUSE_COMPILE_LIB)
+if(NOT BUILD_WIIUSE_SHARED_LIB)
+  target_compile_definitions(wiiuse PUBLIC WIIUSE_STATIC)
+endif()
 
 if(WIN32)
   target_link_libraries(wiiuse ws2_32 setupapi ${WINHID_LIBRARIES})

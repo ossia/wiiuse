@@ -32,13 +32,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(UseBackportedModules)
 include(DoxygenTargets)
 
-if(BUILD_WIIUSE_SHARED_LIB)
-  set(WIIUSE_LIB_TYPE SHARED)
-else()
-  set(WIIUSE_LIB_TYPE STATIC)
-  add_definitions(-DWIIUSE_STATIC)
-endif()
-
 if(NOT WIN32 AND NOT APPLE)
   set(LINUX YES)
   find_package(Bluez)
