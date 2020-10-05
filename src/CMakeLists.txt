@@ -20,7 +20,7 @@ set(SOURCES
   guitar_hero_3.h
   motion_plus.h
   motion_plus.c
-  io.h
+  wii_io.h
   ir.h
   nunchuk.h
   os.h

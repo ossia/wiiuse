@@ -40,7 +40,7 @@
 #include "classic.h"       /* for classic_ctrl_disconnected, etc */
 #include "dynamics.h"      /* for calculate_gforce, etc */
 #include "guitar_hero_3.h" /* for guitar_hero_3_disconnected, etc */
-#include "io.h"            /* for wiiuse_read_data_sync, etc */
+#include "wii_io.h"            /* for wiiuse_read_data_sync, etc */
 #include "ir.h"            /* for calculate_basic_ir, etc */
 #include "motion_plus.h"   /* for motion_plus_disconnected, etc */
 #include "nunchuk.h"       /* for nunchuk_disconnected, etc */

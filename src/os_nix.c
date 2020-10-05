@@ -33,7 +33,7 @@
 
 #include "wiiuse_internal.h" /* for WM_RPT_CTRL_STATUS */
 #include "events.h"
-#include "io.h"
+#include "wii_io.h"
 #include "os.h"
 
 #ifdef WIIUSE_BLUEZ

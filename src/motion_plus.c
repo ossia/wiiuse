@@ -32,7 +32,7 @@
 
 #include "dynamics.h" /* for calc_joystick_state, etc */
 #include "events.h"   /* for disable_expansion */
-#include "io.h"       /* for wiiuse_read */
+#include "wii_io.h"       /* for wiiuse_read */
 #include "ir.h"       /* for wiiuse_set_ir_mode */
 #include "nunchuk.h"  /* for nunchuk_pressed_buttons */
 
