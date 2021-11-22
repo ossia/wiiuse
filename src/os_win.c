@@ -65,7 +65,12 @@ unsigned long wiiuse_os_ticks()
     FILETIME ft;
     ULARGE_INTEGER hnsTime;
 
+#if _WIN32_WINNT >= _WIN32_WINNT_WIN10
     GetSystemTimePreciseAsFileTime(&ft);
+#else
+    GetSystemTimeAsFileTime(&ft);
+#endif
+
     hnsTime.LowPart = ft.dwLowDateTime;
     hnsTime.HighPart = ft.dwHighDateTime;
 
