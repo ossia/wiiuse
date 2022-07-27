@@ -14,14 +14,16 @@ project(WiiUse
 ###
 
 if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-	set(SUBPROJECT YES)
+  set(SUBPROJECT YES)
 endif()
 
-option(BUILD_EXAMPLE "Should we build the example app?" YES)
-option(BUILD_EXAMPLE_SDL "Should we build the SDL-based example app?" YES)
-option(INSTALL_EXAMPLES "Should we install the example apps?" YES)
+option(BUILD_EXAMPLE "Should we build the example app?" NO)
+option(BUILD_EXAMPLE_SDL "Should we build the SDL-based example app?" NO)
+option(BUILD_WIIUSE_SHARED_LIB "Should we build as a shared library (dll/so)?" NO)
+option(INSTALL_EXAMPLES "Should we install the example apps?" NO)
 
 option(CPACK_MONOLITHIC_INSTALL "Only produce a single component installer, rather than multi-component." NO)
+
 
 ###
 # Perform build configuration of dependencies
@@ -32,19 +34,16 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 #include(UseBackportedModules)
 include(DoxygenTargets)
 
-if(NOT BUILD_SHARED_LIBS)
-	add_definitions(-DWIIUSE_STATIC)
-endif()
-
 if(NOT WIN32 AND NOT APPLE)
-	set(LINUX YES)
-	find_package(Bluez REQUIRED)
-	include_directories(${BLUEZ_INCLUDE_DIRS})
+  set(LINUX YES)
+  find_package(Bluez)
+  if(NOT BLUEZ_FOUND)
+    return()
+  endif()
 
-	include("GNUInstallDirs")
+  include_directories(${BLUEZ_INCLUDE_DIRS})
 else()
-	set(LINUX NO)
-	set(CMAKE_INSTALL_LIBDIR "lib")
+  set(LINUX NO)
 endif()
 
 if(WIN32)
@@ -61,22 +60,22 @@ endif()
 add_subdirectory(src)
 
 if(NOT SUBPROJECT)
-	# Example apps
-	if(BUILD_EXAMPLE)
-		add_subdirectory(example)
-	endif()
+  # Example apps
+  if(BUILD_EXAMPLE)
+    add_subdirectory(example)
+  endif()
 
-	if(BUILD_EXAMPLE_SDL)
-		add_subdirectory(example-sdl)
-	endif()
+  if(BUILD_EXAMPLE_SDL)
+    add_subdirectory(example-sdl)
+  endif()
 endif()
 
 if(SUBPROJECT)
-	set(WIIUSE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src" PARENT_SCOPE)
-	set(WIIUSE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/src" PARENT_SCOPE)
-	set(WIIUSE_LIBRARY wiiuse PARENT_SCOPE)
-	set(WIIUSE_LIBRARIES wiiuse PARENT_SCOPE)
-	set(WIIUSE_FOUND ON PARENT_SCOPE)
+  set(WIIUSE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src" PARENT_SCOPE)
+  set(WIIUSE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/src" PARENT_SCOPE)
+  set(WIIUSE_LIBRARY wiiuse PARENT_SCOPE)
+  set(WIIUSE_LIBRARIES wiiuse PARENT_SCOPE)
+  set(WIIUSE_FOUND ON PARENT_SCOPE)
 endif()
 
 if(NOT SUBPROJECT)
@@ -96,45 +95,45 @@ if(NOT SUBPROJECT)
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 	endif()
 
-	# Documentation
-	add_doxygen(Doxyfile
-		INSTALL_DESTINATION ${DOC_DIR}
-		INSTALL_COMPONENT docs
-		NO_PDF)
+  # Documentation
+  add_doxygen(Doxyfile
+    INSTALL_DESTINATION ${DOC_DIR}
+    INSTALL_COMPONENT docs
+    NO_PDF)
 
-	install(FILES
-		CHANGELOG.mkd
-		LICENSE
-		README.mkd
-		DESTINATION ${DOC_DIR} COMPONENT docs)
+  install(FILES
+    CHANGELOG.mkd
+    LICENSE
+    README.mkd
+    DESTINATION ${DOC_DIR} COMPONENT docs)
 
-	if(INSTALL_EXAMPLES)
-		install(FILES example/example.c
-			DESTINATION ${DOC_DIR}/example COMPONENT examples)
-		install(FILES example-sdl/sdl.c
-			DESTINATION ${DOC_DIR}/example-sdl COMPONENT examples)
-	endif()
+  if(INSTALL_EXAMPLES)
+    install(FILES example/example.c
+      DESTINATION ${DOC_DIR}/example COMPONENT examples)
+    install(FILES example-sdl/sdl.c
+      DESTINATION ${DOC_DIR}/example-sdl COMPONENT examples)
+  endif()
 
-	set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
-	set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.mkd")
+  set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+  set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.mkd")
 
-	include(GetCompilerInfoString)
-	get_compiler_info_string(_compiler)
+  include(GetCompilerInfoString)
+  get_compiler_info_string(_compiler)
 
 	set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}-${_compiler}")
 
-	# Include the packaging system now that we have it all set up
-	include(CPack)
+  # Include the packaging system now that we have it all set up
+  include(CPack)
 
-	cpack_add_component(docs HIDDEN)
+  cpack_add_component(docs HIDDEN)
 
-	cpack_add_component(development
-		DISPLAY_NAME "Development Files")
+  cpack_add_component(development
+    DISPLAY_NAME "Development Files")
 
-	cpack_add_component(examples
-		DISPLAY_NAME "Examples")
+  cpack_add_component(examples
+    DISPLAY_NAME "Examples")
 
-	cpack_add_component(runtime
-		DISPLAY_NAME "Runtime Library"
-		REQUIRED)
+  cpack_add_component(runtime
+    DISPLAY_NAME "Runtime Library"
+    REQUIRED)
 endif()

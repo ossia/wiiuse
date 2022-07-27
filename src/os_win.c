@@ -34,7 +34,7 @@
 #include <time.h>
 
 #include "events.h"
-#include "io.h"
+#include "wii_io.h"
 #include "os.h"
 
 #ifdef WIIUSE_WIN32
