@@ -171,6 +171,7 @@ else()
 
 		find_library(WINHID_LIBRARY
 			NAMES
+			hid
 			libhid
 			HINTS
 			"${WINHID_ROOT_DIR}"
@@ -181,6 +182,7 @@ else()
 			lib/w32api)
 		find_library(WINHID_SETUPAPI_LIBRARY
 			NAMES
+			setupapi
 			libsetupapi
 			HINTS
 			"${WINHID_ROOT_DIR}"

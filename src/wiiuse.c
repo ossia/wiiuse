@@ -35,7 +35,7 @@
  *	of the API.
  */
 
-#include "io.h" /* for wiiuse_handshake, etc */
+#include "wii_io.h" /* for wiiuse_handshake, etc */
 #include "os.h" /* for wiiuse_os_* */
 #include "wiiuse_internal.h"
 
