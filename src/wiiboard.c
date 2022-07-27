@@ -32,7 +32,7 @@
  */
 
 #include "wiiboard.h"
-#include "io.h"
+#include "wii_io.h"
 
 #include <stdio.h>  /* for printf */
 #include <string.h> /* for memset */

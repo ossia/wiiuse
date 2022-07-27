@@ -31,7 +31,7 @@
  *	@brief Handles device I/O (non-OS specific).
  */
 
-#include "io.h"
+#include "wii_io.h"
 #include "events.h" /* for propagate_event */
 #include "ir.h"     /* for wiiuse_set_ir_mode */
 #include "wiiuse_internal.h"
