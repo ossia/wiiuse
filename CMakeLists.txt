@@ -21,6 +21,7 @@ option(BUILD_EXAMPLE "Should we build the example app?" NO)
 option(BUILD_EXAMPLE_SDL "Should we build the SDL-based example app?" NO)
 option(BUILD_WIIUSE_SHARED_LIB "Should we build as a shared library (dll/so)?" NO)
 option(INSTALL_EXAMPLES "Should we install the example apps?" NO)
+option(WIIUSE_INSTALL_RULES "Enable install & export rules" ON)
 
 option(CPACK_MONOLITHIC_INSTALL "Only produce a single component installer, rather than multi-component." NO)
 
