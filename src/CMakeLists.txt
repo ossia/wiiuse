@@ -98,18 +98,20 @@ set_property(TARGET wiiuse APPEND PROPERTY
   COMPILE_DEFINITIONS $<$<CONFIG:Debug>:WITH_WIIUSE_DEBUG>
 )
 set_target_properties(wiiuse PROPERTIES
-	SOVERSION ${PROJECT_VERSION_MAJOR}
-	VERSION ${PROJECT_VERSION})
+  SOVERSION ${PROJECT_VERSION_MAJOR}
+  VERSION ${PROJECT_VERSION})
 
-install(TARGETS
-  wiiuse
-  EXPORT wiiuse-exports
-  RUNTIME DESTINATION bin COMPONENT runtime
-  ARCHIVE DESTINATION lib COMPONENT development
-  LIBRARY DESTINATION lib COMPONENT runtime
-  PUBLIC_HEADER DESTINATION include COMPONENT development
-)
+if(WIIUSE_INSTALL_RULES)
+  install(TARGETS
+    wiiuse
+    EXPORT wiiuse-exports
+    RUNTIME DESTINATION bin COMPONENT runtime
+    ARCHIVE DESTINATION lib COMPONENT development
+    LIBRARY DESTINATION lib COMPONENT runtime
+    PUBLIC_HEADER DESTINATION include COMPONENT development
+  )
 
-install(EXPORT wiiuse-exports
-        DESTINATION lib/cmake/wiiuse)
-export(EXPORT wiiuse-exports)
+  install(EXPORT wiiuse-exports
+          DESTINATION lib/cmake/wiiuse)
+  export(EXPORT wiiuse-exports)
+endif()
